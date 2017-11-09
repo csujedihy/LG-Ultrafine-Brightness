@@ -36,61 +36,72 @@ const std::vector<uint16_t> big_steps = {
 	0xd2f0,
 };
 
-uint16_t next_step(uint16_t val, const vector<uint16_t> &steps) {
+uint16_t next_step(uint16_t val, const vector<uint16_t> &steps)
+{
 	auto start = 0;
 	auto end = steps.size() - 1;
-	while (start + 1 < end) {
+	while (start + 1 < end)
+	{
 		auto mid = start + (end - start) / 2;
-		if (steps[mid] > val) {
+		if (steps[mid] > val)
+		{
 			end = mid;
 		}
-		else {
+		else
+		{
 			start = mid;
 		}
 	}
 	return steps[end];
 }
 
-uint16_t prev_step(uint16_t val, const vector<uint16_t> &steps) {
+uint16_t prev_step(uint16_t val, const vector<uint16_t> &steps)
+{
 	auto start = 0;
 	auto end = steps.size() - 1;
-	while (start + 1 < end) {
+	while (start + 1 < end)
+	{
 		auto mid = start + (end - start) / 2;
-		if (steps[mid] >= val) {
+		if (steps[mid] >= val)
+		{
 			end = mid;
 		}
-		else {
+		else
+		{
 			start = mid;
 		}
 	}
 	return steps[start];
 }
 
-uint16_t get_brightness(hid_device *handle) {
-	uint8_t data[7] = { 0 };
+uint16_t get_brightness(hid_device *handle)
+{
+	uint8_t data[7] = {0};
 	int res = hid_get_feature_report(handle, data, sizeof(data));
-	if (res < 0) {
+	if (res < 0)
+	{
 		printf("Unable to get a feature report.\n");
 		printf("%ls", hid_error(handle));
 	}
 	return data[1] + (data[2] << 8);
 }
 
-void set_brightness(hid_device *handle, uint16_t val) {
+void set_brightness(hid_device *handle, uint16_t val)
+{
 	uint8_t data[7] = {
 		0x00,
 		uint8_t(val & 0x00ff),
 		uint8_t((val >> 8) & 0x00ff),
-		0x00, 0x00, 0x00, 0x00
-	};
+		0x00, 0x00, 0x00, 0x00};
 	int res = hid_send_feature_report(handle, data, sizeof(data));
-	if (res < 0) {
+	if (res < 0)
+	{
 		printf("Unable to set a feature report.\n");
 		printf("%ls", hid_error(handle));
 	}
 }
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
 	unsigned char buf[7];
 	hid_device *handle;
@@ -101,7 +112,8 @@ int main(int argc, char* argv[])
 		return -1;
 
 	handle = hid_open(vendor_id, product_id, NULL);
-	if (!handle) {
+	if (!handle)
+	{
 		printf("unable to open device\n");
 		return 1;
 	}
@@ -110,16 +122,19 @@ int main(int argc, char* argv[])
 	printf("Press '-' or '=' to adjust brightness.\n");
 	printf("Press '[' or: ']' to fine tune.\n");
 	printf("Press 'p' to use the minimum brightness\n");
-	printf("Press '\' to use the maximum brightness\n");
+	printf("Press '\\' to use the maximum brightness\n");
 	printf("Press 'q' to quit.\n");
 
-	while (true) {
+	while (true)
+	{
 		printf("Current brightness = %d%4s\r", int((float(brightness) / 54000) * 100.0), " ");
 		int c = _getch();
-		if (c == 'q') {
+		if (c == 'q')
+		{
 			break;
 		}
-		switch (c) {
+		switch (c)
+		{
 		case '+':
 		case '=':
 			brightness = next_step(brightness, big_steps);
