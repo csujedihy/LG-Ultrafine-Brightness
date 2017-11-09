@@ -16,3 +16,11 @@ Press 'p' to use the minimum brightness
 Press '' to use the maximum brightness
 Press 'q' to quit.
 ```
+
+### Build
+
+1. Open the `sln` file by Visual Studio.
+2. Select `x64` configuration.
+3. Build!
+
+Note that I put the hidapi.dll in the project and if you don't believe it's secure, you can build a new one (x64) and replace it.
