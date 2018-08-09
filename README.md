@@ -10,6 +10,8 @@ Thanks @unknownzerx.
 
 The original tool was unable to adjust brightness in Windows 10 and I also made some minor improvements to it like showing current brightness and efficiency while adjusting.
 
+### Linux
+Please go to this repo [https://github.com/velum/lguf-brightness](https://github.com/velum/lguf-brightness).
 
 ### Usage
 
