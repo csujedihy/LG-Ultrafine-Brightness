@@ -96,7 +96,38 @@ int main(int argc, char *argv[]) {
     if (hid_init())
         return -1;
 
-    handle = hid_open(vendor_id, product_id, NULL);
+    char* ultrafine_monitor_path = NULL;
+
+    devs = hid_enumerate(0x0, 0x0);
+    cur_dev = devs;
+    while (cur_dev) {
+        if (cur_dev->vendor_id == 0x043e)   //0x043e means LG
+        {
+            printf("Device Found\n  type: %04hx %04hx\n  path: %s\n  serial_number: %ls", cur_dev->vendor_id, cur_dev->product_id, cur_dev->path, cur_dev->serial_number);
+            printf("\n");
+            printf("  Manufacturer: %ls\n", cur_dev->manufacturer_string);
+            printf("  Product:      %ls\n", cur_dev->product_string);
+            printf("  Release:      %hx\n", cur_dev->release_number);
+            printf("  Interface:    %d\n", cur_dev->interface_number);
+            printf("\n");
+
+            if (wcsstr(cur_dev->product_string, L"BRIGHTNESS"))
+            {
+                ultrafine_monitor_path = cur_dev->path;
+                break;
+            }
+        }
+
+        cur_dev = cur_dev->next;
+    }
+
+    if (ultrafine_monitor_path == NULL)
+    {
+        printf("device not found!");
+        exit(-1);
+    }
+
+    handle = hid_open_path(ultrafine_monitor_path);
     if (!handle) {
         printf("unable to open device\n");
         return 1;
