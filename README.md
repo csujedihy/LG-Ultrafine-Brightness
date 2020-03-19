@@ -1,9 +1,5 @@
 # LG-Ultrafine-Brightness
 
-2019-12-29: Using Huawei DP+USB-A to USB-C cable to connect PC Win10 will generate 2 device, so I modified a little.
-
----
-
 A tool to adjust brightness of LG Ultrafine 4k/5K on Windows without the help of Bootcamp. I built my own PC and made this tool to adjust brightness through my PC.
 
 The program simply send set feature report to the device via USB and then the LG 4/5K monitor adjust the brightness upon receiving such reports.
