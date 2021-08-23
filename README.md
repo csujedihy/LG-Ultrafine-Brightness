@@ -2,7 +2,7 @@
 
 A tool to adjust brightness of LG Ultrafine 4k/5K on Windows without the help of Bootcamp. I built my own PC and made this tool to adjust brightness through my PC.
 
-The program simply send set feature report to the device via USB and then the LG 4/5K monitor adjust the brightness upon receiving such reports.
+The program sends set feature report to the device to adjust the brightness.
 
 This project is derived from [https://github.com/unknownzerx/lguf-brightness](https://github.com/unknownzerx/lguf-brightness). 
 
